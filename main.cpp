@@ -5,77 +5,124 @@
 using namespace std;
 
 int main() {
-    const int originalInventoryCount = 50; // for audit table
-    const double orignalCashAmount = 200; // for audit table
-    const double taxRate = 1.09125;  // for tax calculation
-    string foodName;
-    char itemCode;
+    const int originalInventoryCount = 50;
+    const double originalCashAmount = 200.0;
+
+    // display menu 
+    cout << "Drink             Small (S)   Medium (M)   Large (L)" << endl;
+    cout << "----------------------------------------------------" << endl;
+    cout << "A. Apple Juice     $2.50       $3.50        $4.50" << endl;
+    cout << "B. Beer            $5.00       $7.00        $9.00" << endl;
+    cout << "C. Coffee          $2.00       $2.75        $3.25" << endl;
+    cout << "D. Lemonade        $2.25       $3.00        $3.75" << endl;
+    cout << "------------------------------------------------------" << endl;
+
+    // item choice/size
+    char itemChoice;
+    char sizeChoice;
+
+    cout << "\nSelect an item (A, B, C, D): ";
+    cin >> itemChoice;
+
+    cout << "Select a size (s, m, l): ";
+    cin >> sizeChoice;
+
+    string foodName = ""; 
+    string sizeLabel = "";
+    double unitPrice = 0.0;
+    
+    // apple juice
+    if (itemChoice == 'A' || itemChoice == 'a') {
+        foodName = "Apple Juice";
+        if (sizeChoice == 's' || sizeChoice == 'S') {
+            sizeLabel = "Small";
+            unitPrice = 2.50;
+        }
+        else if (sizeChoice == 'm' || sizeChoice == 'M') {
+            sizeLabel = "Medium";
+            unitPrice = 3.50;
+        }
+        else if (sizeChoice == 'l' || sizeChoice == 'L') {
+            sizeLabel = "Large";
+            unitPrice = 4.50;
+        }
+    }
+    // beer
+    else if (itemChoice == 'B' || itemChoice == 'b') {
+        foodName = "Beer";
+        if (sizeChoice == 's' || sizeChoice == 'S') {
+            sizeLabel = "Small";
+            unitPrice = 5.00;
+        }
+        else if (sizeChoice == 'm' || sizeChoice == 'M') {
+            sizeLabel = "Medium";
+            unitPrice = 7.00;
+        }
+        else if (sizeChoice == 'l' || sizeChoice == 'L') {
+            sizeLabel = "Large";
+            unitPrice = 9.00;
+        }
+    }
+    // coffee 
+    else if (itemChoice == 'C' || itemChoice == 'c') {
+        foodName = "Coffee";
+        if (sizeChoice == 's' || sizeChoice == 'S') {
+            sizeLabel = "Small";
+            unitPrice = 2.00;
+        }
+        else if (sizeChoice == 'm' || sizeChoice == 'M') {
+            sizeLabel = "Medium";
+            unitPrice = 2.75;
+        }
+        else if (sizeChoice == 'l' || sizeChoice == 'L') {
+            sizeLabel = "Large";
+            unitPrice = 3.25;
+        }
+    }
+    // lemonade
+    else if (itemChoice == 'D' || itemChoice == 'd') {
+        foodName = "Lemonade";
+        if (sizeChoice == 's' || sizeChoice == 'S') {
+            sizeLabel = "Small";
+            unitPrice = 2.25;
+        }
+        else if (sizeChoice == 'm' || sizeChoice == 'M') {
+            sizeLabel = "Medium";
+            unitPrice = 3.00;
+        }
+        else if (sizeChoice == 'l' || sizeChoice == 'L') {
+            sizeLabel = "Large";
+            unitPrice = 3.75;
+        }
+    }
+
     int quantity;
-    double unitPrice;
     char member;
-
-    cout << "Enter Food Name: ";
-    getline(cin, foodName);
-
-    cout << "Enter Item Code: ";
-    cin >> itemCode;
 
     cout << "Enter Quantity: ";
     cin >> quantity;
-
-    cout << "Enter Unit Price: ";
-    cin >> unitPrice;
 
     cout << "Member (y/n): ";
     cin >> member;
 
     double subtotal = quantity * unitPrice;
 
-    cout << fixed << setprecision(2);
-
-    cout << left << setw(12) << "Item:" << right << setw(10) << foodName << endl;
-    cout << left << setw(12) << "Code:" << right << setw(10) << itemCode << endl;
-    cout << left << setw(12) << "Quantity:" << right << setw(10) << quantity << endl;
-    cout << left << setw(12) << "Price:" << right << setw(10) << unitPrice << endl;
-    cout << left << setw(12) << "Subtotal:" << right << setw(10) << subtotal << endl;
-
-    /// Partner B Section
-
-    // Member discount applied.
-    if (member) {
-        cout << "Member Discount (10%) activated!" << endl;
-        subtotal *= .9;  // 10% discount applied.
+    // 10% member discount
+    if (member == 'y' || member == 'Y') {
+        cout << "\nMember Discount (10%) applied!" << endl;
+        subtotal = subtotal * 0.90; 
     }
     else {
-        cout << "Not a member" << endl;
+        cout << "\nNot a member." << endl;
     }
 
-    cout << left << setw(20) << "Total (before tax):" << right << setw(10) << subtotal << endl;
-    // Tax calculated
-    subtotal *= taxRate;
-    // Total after Tax amt displayed.
-    cout << left << setw(20) << "Total (with tax):" << right << setw(10) << subtotal << endl;
-
-    // Inventory Audit Table
-
-    int currentInventory = originalInventoryCount - quantity;
-    double currentCashAmount = orignalCashAmount + subtotal;
-
-    cout << "Inventory Audit Table" << endl;
-    cout << left;
-    cout << setw(12) << "Item"
-        << setw(15) << "Initial Count"
-        << setw(15) << "After Transaction Count"
-        << endl;
-
-    cout << setw(12) << foodName
-        << setw(15) << originalInventoryCount
-        << setw(15) << currentInventory
-        << endl;
-    cout << setw(12) << "Cash"
-        << setw(15) << orignalCashAmount
-        << setw(15) << currentCashAmount
-        << endl;
+    // receipt
+    cout << fixed << setprecision(2);
+    cout << "\n--- Order Summary ---" << endl;
+    cout << "Item:      " << sizeLabel << " " << foodName << endl;
+    cout << "Quantity:  " << quantity << endl;
+    cout << "Unit Price: $" << unitPrice << endl;
+    cout << "Subtotal:   $" << subtotal << endl;
 
 
     return 0;
